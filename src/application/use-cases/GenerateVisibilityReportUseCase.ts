@@ -10,6 +10,7 @@ import {
 import { createReportId } from "@/lib/utils/id";
 import { nowIso } from "@/lib/utils/date";
 import { OpenAIBrandExtractor } from "@/infrastructure/ai/OpenAIProvider";
+import { isEngineEnabled } from "@/infrastructure/config/env";
 
 export class GenerateVisibilityReportUseCase {
   constructor(private readonly openAi = new OpenAIBrandExtractor()) {}
@@ -28,20 +29,25 @@ export class GenerateVisibilityReportUseCase {
     let keyFindings: string[];
     let recommendations: string[];
 
-    try {
-      const generated = await this.openAi.generateFindings({
-        brandProfile: input.brandProfile,
-        observations: input.observations.map((o) => ({
-          platform: o.platform,
-          brandMentioned: o.brandMentioned,
-          brandRecommended: o.brandRecommended,
-          citationFound: o.citationFound,
-        })),
-        platformScores,
-      });
-      keyFindings = generated.keyFindings;
-      recommendations = generated.recommendations;
-    } catch {
+    if (isEngineEnabled("openai")) {
+      try {
+        const generated = await this.openAi.generateFindings({
+          brandProfile: input.brandProfile,
+          observations: input.observations.map((o) => ({
+            platform: o.platform,
+            brandMentioned: o.brandMentioned,
+            brandRecommended: o.brandRecommended,
+            citationFound: o.citationFound,
+          })),
+          platformScores,
+        });
+        keyFindings = generated.keyFindings;
+        recommendations = generated.recommendations;
+      } catch {
+        keyFindings = buildDefaultFindings(input.observations, platformScores);
+        recommendations = buildDefaultRecommendations(input.brandProfile);
+      }
+    } else {
       keyFindings = buildDefaultFindings(input.observations, platformScores);
       recommendations = buildDefaultRecommendations(input.brandProfile);
     }

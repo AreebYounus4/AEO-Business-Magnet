@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getReportRepository } from "@/infrastructure/di/container";
+import { ScoreCheckProvider } from "@/components/forms/ScoreCheckContext";
 import { ScoreSummary } from "@/components/report/ScoreSummary";
 import { PlatformScoreCard } from "@/components/report/PlatformScoreCard";
 import { FindingsList } from "@/components/report/FindingsList";
@@ -18,24 +19,27 @@ export default async function ReportPage({
 
   if (!report) {
     return (
-      <div className="min-h-screen bg-off">
-        <SiteNav />
-        <main className="wrap py-20 text-center">
-          <h1 className="mb-4 text-2xl font-extrabold text-navy">Report not found</h1>
-          <p className="mb-6 text-text-muted">
-            This report may have expired or the scan ID is invalid.
-          </p>
-          <Link href="/" className="btn-red">
-            Back to Home
-          </Link>
-        </main>
-        <SiteFooter />
-      </div>
+      <ScoreCheckProvider>
+        <div className="min-h-screen bg-off">
+          <SiteNav />
+          <main className="wrap py-20 text-center">
+            <h1 className="mb-4 text-2xl font-extrabold text-navy">Report not found</h1>
+            <p className="mb-6 text-text-muted">
+              This report may have expired or the scan ID is invalid.
+            </p>
+            <Link href="/" className="btn-red">
+              Back to Home
+            </Link>
+          </main>
+          <SiteFooter />
+        </div>
+      </ScoreCheckProvider>
     );
   }
 
   return (
-    <div className="min-h-screen bg-off">
+    <ScoreCheckProvider>
+      <div className="min-h-screen bg-off">
       <div className="no-print">
         <SiteNav />
       </div>
@@ -81,5 +85,6 @@ export default async function ReportPage({
         <SiteFooter />
       </div>
     </div>
+    </ScoreCheckProvider>
   );
 }

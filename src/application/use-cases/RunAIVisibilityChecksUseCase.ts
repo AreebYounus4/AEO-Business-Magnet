@@ -4,6 +4,7 @@ import type { VisibilityPrompt } from "@/domain/entities/VisibilityPrompt";
 import type { AIObservation } from "@/domain/entities/AIObservation";
 import { evaluateVisibilityResponse } from "@/domain/services/VisibilityEvaluator";
 import { OpenAIBrandExtractor } from "@/infrastructure/ai/OpenAIProvider";
+import { isEngineEnabled } from "@/infrastructure/config/env";
 import { logger } from "@/infrastructure/logging/logger";
 import { AppError } from "@/lib/errors/AppError";
 
@@ -42,14 +43,16 @@ export class RunAIVisibilityChecksUseCase {
             });
 
             let aiEvaluation;
-            try {
-              aiEvaluation = await this.evaluator.evaluateResponse({
-                prompt: prompt.prompt,
-                rawText: response.rawText,
-                brandProfile: input.brandProfile,
-              });
-            } catch {
-              // fall back to deterministic evaluation
+            if (isEngineEnabled("openai")) {
+              try {
+                aiEvaluation = await this.evaluator.evaluateResponse({
+                  prompt: prompt.prompt,
+                  rawText: response.rawText,
+                  brandProfile: input.brandProfile,
+                });
+              } catch {
+                // fall back to deterministic evaluation
+              }
             }
 
             observations.push(
