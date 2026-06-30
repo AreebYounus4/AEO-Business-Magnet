@@ -1,33 +1,44 @@
-export function ProblemSection() {
-  const points = [
-    "Buyers now ask AI for recommendations before they ever click a website.",
-    "Ranking #1 on Google does not guarantee AI will recommend your brand.",
-    "AI platforms synthesize answers from entity signals, authority, and citations.",
-    "Most brands are invisible in AI-generated buying journeys.",
-  ];
+import { QUERY_CARDS } from "@/components/landing/content";
 
+export function ProblemSection() {
   return (
-    <section id="problem" className="sec bg-off">
+    <section className="problem-sec sec" id="problem" aria-labelledby="problem-h">
       <div className="wrap">
-        <div className="eyebrow">
-          <span className="eyebrow-dot" />
-          The Problem
+        <div className="problem-intro">
+          <div className="eyebrow eyebrow-white" style={{ justifyContent: "center" }}>
+            <span className="eyebrow-dot" aria-hidden="true" />
+            The New Reality
+          </div>
+          <h2 className="d-lg t-white" id="problem-h" style={{ marginBottom: "1.1rem" }}>
+            Ranking #1 Doesn&apos;t Mean
+            <br />
+            You&apos;re Recommended.
+          </h2>
+          <p className="b-lg" style={{ color: "rgba(255,255,255,.62)" }}>
+            Traditional SEO was built for rankings. AI search is built for answers.
+            Today, buyers ask AI — and AI doesn&apos;t simply show websites. It
+            recommends brands.
+          </p>
         </div>
-        <h2 className="mb-4 text-3xl font-extrabold tracking-tight text-navy md:text-4xl">
-          Traditional SEO is not enough for AI search.
-        </h2>
-        <p className="mb-10 max-w-2xl text-lg text-text-mid">
-          AI search is built for answers and recommendations — not blue links. If
-          your brand lacks entity authority and category signals, you will not be
-          recommended.
-        </p>
-        <div className="grid gap-5 md:grid-cols-2">
-          {points.map((point) => (
-            <div
-              key={point}
-              className="rounded-xl border border-border bg-white p-6 shadow-sm"
-            >
-              <p className="font-semibold text-navy">{point}</p>
+
+        <div className="query-wall" role="list" aria-label="AI search query examples">
+          {QUERY_CARDS.map((card) => (
+            <div key={card.query} className="query-card" role="listitem">
+              <div className="qc-platform">
+                <div
+                  className="qc-icon"
+                  style={{ background: card.iconBg }}
+                >
+                  {card.icon}
+                </div>
+                <span className="qc-name">{card.platform}</span>
+              </div>
+              <div className="qc-q">&ldquo;{card.query}&rdquo;</div>
+              <div
+                className={`qc-note ${card.visible ? "visible" : "invisible"}`}
+              >
+                {card.note}
+              </div>
             </div>
           ))}
         </div>
