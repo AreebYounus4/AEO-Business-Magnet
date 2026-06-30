@@ -1,35 +1,60 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { OpenScoreCheckButton } from "@/components/forms/ScoreCheckContext";
+import { ArrowIcon, LogoMark } from "@/components/landing/icons";
 
 export function SiteNav() {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
-    <nav className="sticky top-0 z-50 border-b border-border bg-white/95 backdrop-blur">
-      <div className="wrap flex h-[70px] items-center justify-between gap-6">
-        <Link href="/" className="flex items-center gap-2">
-          <div className="flex h-9 w-9 items-center justify-center rounded-md bg-navy text-sm font-bold text-white">
-            CC
+    <nav
+      className={`nav${scrolled ? " scrolled" : ""}`}
+      role="navigation"
+      aria-label="Main navigation"
+    >
+      <div className="nav-inner">
+        <Link href="/" className="logo" aria-label="Calibrate Commerce home">
+          <div className="logo-mark" aria-hidden="true">
+            <LogoMark />
           </div>
           <div>
-            <div className="text-base font-extrabold leading-tight">Calibrate Commerce</div>
-            <div className="text-[0.62rem] font-semibold uppercase tracking-wider text-text-muted">
-              AI Search Optimization
-            </div>
+            <div className="logo-text">Calibrate Commerce</div>
+            <div className="logo-sub">Growth Partner</div>
           </div>
         </Link>
-        <div className="hidden items-center gap-7 md:flex">
-          <a href="#problem" className="text-sm font-semibold text-text-mid hover:text-red">
-            Why AEO
-          </a>
-          <a href="#framework" className="text-sm font-semibold text-text-mid hover:text-red">
-            How it works
-          </a>
-          <a href="#faq" className="text-sm font-semibold text-text-mid hover:text-red">
-            FAQ
-          </a>
+
+        <div className="nav-links">
+          <a href="#how">How It Works</a>
+          <a href="#framework">Our Framework</a>
+          <a href="#why">Why Calibrate</a>
+          <a href="#faq">FAQ</a>
         </div>
-        <OpenScoreCheckButton className="btn-red hidden text-sm md:inline-flex">
-          Check Your Score
-        </OpenScoreCheckButton>
+
+        <div className="nav-cta">
+          <a
+            href="#audit"
+            className="btn btn-outline"
+            style={{ padding: "10px 18px", fontSize: "0.83rem" }}
+          >
+            See How We Work
+          </a>
+          <OpenScoreCheckButton
+            className="btn btn-red"
+            style={{ padding: "10px 18px", fontSize: "0.83rem" }}
+          >
+            Check Your Website Score
+            <ArrowIcon size={13} />
+          </OpenScoreCheckButton>
+        </div>
       </div>
     </nav>
   );

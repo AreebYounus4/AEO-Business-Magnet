@@ -1,68 +1,82 @@
 "use client";
 
 import { useState } from "react";
+import {
+  FAQ_ITEMS,
+  type FaqCategory,
+} from "@/components/landing/content";
 
-const faqs = [
-  {
-    q: "What is AI Search Optimization (AEO)?",
-    a: "AEO is the practice of optimizing your brand's content, authority signals, and entity presence so it appears in AI-generated recommendations from ChatGPT, Gemini, Perplexity, and Google AI.",
-  },
-  {
-    q: "Why doesn't ranking #1 on Google mean I'm recommended by AI?",
-    a: "AI platforms synthesize information and recommend brands based on entity authority, content comprehensiveness, trusted citations, and credibility signals — not just rankings.",
-  },
-  {
-    q: "How do you measure AI search visibility?",
-    a: "We run category-aware prompts across enabled AI engines and measure brand mentions, recommendations, citations, sentiment, and entity accuracy.",
-  },
-  {
-    q: "What is an AI Visibility Audit?",
-    a: "A diagnostic assessment of how your brand appears across AI platforms, identifying gaps in entity signals, content, authority citations, and structured data.",
-  },
-  {
-    q: "What is the difference between AEO and traditional SEO?",
-    a: "Traditional SEO optimizes for ranked links. AEO optimizes for being cited and recommended in AI-generated answers.",
-  },
+const CATEGORIES: { id: FaqCategory; label: string }[] = [
+  { id: "all", label: "All Questions" },
+  { id: "aeo", label: "AEO & AI Search" },
+  { id: "process", label: "Process & Results" },
+  { id: "markets", label: "Markets & Fit" },
 ];
 
 export function FAQSection() {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const [activeCategory, setActiveCategory] = useState<FaqCategory>("all");
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  const filtered =
+    activeCategory === "all"
+      ? FAQ_ITEMS
+      : FAQ_ITEMS.filter((item) => item.category === activeCategory);
 
   return (
-    <section id="faq" className="sec bg-off">
-      <div className="wrap max-w-3xl">
-        <div className="eyebrow">
-          <span className="eyebrow-dot" />
-          FAQ
+    <section className="faq-sec sec" id="faq" aria-labelledby="faq-h">
+      <div className="wrap">
+        <div style={{ maxWidth: "520px", marginBottom: "clamp(2.5rem,5vw,4rem)" }}>
+          <div className="eyebrow">
+            <span className="eyebrow-dot" aria-hidden="true" />
+            Frequently Asked Questions
+          </div>
+          <h2 className="d-md" id="faq-h">
+            Answers to the Questions That Matter.
+          </h2>
         </div>
-        <h2 className="mb-8 text-3xl font-extrabold tracking-tight text-navy md:text-4xl">
-          Answers to the questions that matter.
-        </h2>
-        <div className="space-y-3">
-          {faqs.map((faq, index) => {
-            const isOpen = openIndex === index;
-            return (
-              <div
-                key={faq.q}
-                className="overflow-hidden rounded-xl border border-border bg-white"
-              >
+
+        <div className="faq-layout">
+          <div className="faq-sidebar">
+            <div className="faq-cats" role="list" aria-label="FAQ categories">
+              {CATEGORIES.map((cat) => (
                 <button
+                  key={cat.id}
                   type="button"
-                  className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left font-bold text-navy"
-                  onClick={() => setOpenIndex(isOpen ? null : index)}
-                  aria-expanded={isOpen}
+                  className={`faq-cat${activeCategory === cat.id ? " active" : ""}`}
+                  onClick={() => {
+                    setActiveCategory(cat.id);
+                    setOpenIndex(null);
+                  }}
                 >
-                  {faq.q}
-                  <span className="text-red">{isOpen ? "−" : "+"}</span>
+                  {cat.label}
                 </button>
-                {isOpen ? (
-                  <div className="border-t border-border px-5 py-4 text-sm text-text-mid">
-                    {faq.a}
+              ))}
+            </div>
+          </div>
+
+          <div className="faq-items">
+            {filtered.map((faq, index) => {
+              const isOpen = openIndex === index;
+              return (
+                <div key={faq.question} className="faq-item" data-cat={faq.category}>
+                  <button
+                    type="button"
+                    className={`faq-q${isOpen ? " open" : ""}`}
+                    onClick={() => setOpenIndex(isOpen ? null : index)}
+                    aria-expanded={isOpen}
+                  >
+                    {faq.question}
+                    <span className="faq-icon" aria-hidden="true">
+                      +
+                    </span>
+                  </button>
+                  <div className={`faq-a${isOpen ? " open" : ""}`} role="region">
+                    <p>{faq.answer}</p>
                   </div>
-                ) : null}
-              </div>
-            );
-          })}
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>

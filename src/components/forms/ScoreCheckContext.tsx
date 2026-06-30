@@ -6,6 +6,7 @@ import {
   useContext,
   useEffect,
   useState,
+  type CSSProperties,
   type ReactNode,
 } from "react";
 import { LeadCaptureModal } from "./LeadCaptureModal";
@@ -56,16 +57,18 @@ export function useScoreCheck() {
 interface OpenScoreCheckButtonProps {
   children: ReactNode;
   className?: string;
+  style?: CSSProperties;
 }
 
 export function OpenScoreCheckButton({
   children,
-  className = "btn-red",
+  className = "btn btn-red",
+  style,
 }: OpenScoreCheckButtonProps) {
   const { open } = useScoreCheck();
 
   return (
-    <button type="button" className={className} onClick={open}>
+    <button type="button" className={className} style={style} onClick={open}>
       {children}
     </button>
   );
