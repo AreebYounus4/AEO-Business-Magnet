@@ -19,20 +19,20 @@ export function LeadCaptureModal({ open, onClose }: LeadCaptureModalProps) {
     >
       <button
         type="button"
-        className="absolute inset-0 bg-navy/70 backdrop-blur-sm"
+        className="absolute inset-0 bg-navy/72 backdrop-blur-[6px]"
         onClick={onClose}
         aria-label="Close score checker"
       />
-      <div className="relative z-10 max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl shadow-2xl">
+      <div className="relative z-10 flex max-h-[90vh] w-[min(82vw,860px)] flex-col overflow-hidden rounded-[20px] shadow-[0_32px_80px_rgba(7,25,50,0.28)]">
         <button
           type="button"
           onClick={onClose}
-          className="absolute right-4 top-4 z-20 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-lg font-bold text-navy shadow hover:bg-white"
+          className="absolute right-[18px] top-4 z-20 flex h-8 w-8 items-center justify-center rounded-full bg-off text-lg text-text-muted transition hover:bg-border hover:text-navy"
           aria-label="Close"
         >
           ×
         </button>
-        <LeadCaptureForm variant="modal" />
+        <LeadCaptureForm variant="modal" onClose={onClose} />
       </div>
     </div>
   );
