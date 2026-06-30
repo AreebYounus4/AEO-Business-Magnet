@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { OpenScoreCheckButton } from "@/components/forms/ScoreCheckContext";
 
 export function SiteNav() {
   return (
@@ -26,9 +27,9 @@ export function SiteNav() {
             FAQ
           </a>
         </div>
-        <a href="#score" className="btn-red hidden text-sm md:inline-flex">
+        <OpenScoreCheckButton className="btn-red hidden text-sm md:inline-flex">
           Check Your Score
-        </a>
+        </OpenScoreCheckButton>
       </div>
     </nav>
   );

@@ -8,6 +8,27 @@ import { AIProviderError } from "@/lib/errors/AIProviderError";
 
 const AI_CALL_TIMEOUT_MS = 30_000;
 
+function formatOpenAIErrorMessage(error: unknown): string {
+  if (error instanceof Error && error.message === "AI call timed out") {
+    return "Request timed out after 30 seconds";
+  }
+
+  if (error && typeof error === "object" && "error" in error) {
+    const apiError = (error as { error?: { message?: string; code?: string } })
+      .error;
+    if (apiError?.code === "insufficient_quota") {
+      return "API quota exceeded. Check your OpenAI billing settings.";
+    }
+    if (apiError?.message) return apiError.message;
+  }
+
+  if (error instanceof Error && error.message) {
+    return error.message.replace(/^\d{3}\s+/, "");
+  }
+
+  return "Request failed";
+}
+
 async function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
   let timeoutId: ReturnType<typeof setTimeout>;
   const timeout = new Promise<never>((_, reject) => {
@@ -69,7 +90,11 @@ export class OpenAIProvider implements AIEngineProvider {
         rawText,
       };
     } catch (error) {
-      throw new AIProviderError("openai", "Request failed", error);
+      throw new AIProviderError(
+        "openai",
+        formatOpenAIErrorMessage(error),
+        error,
+      );
     }
   }
 }
@@ -135,28 +160,36 @@ export class OpenAIBrandExtractor {
   ): Promise<BrandProfile> {
     const env = getEnv();
 
-    const completion = await withTimeout(
-      this.getClient().chat.completions.create({
-        model: env.OPENAI_MODEL,
-        response_format: { type: "json_object" },
-        messages: [
-          {
-            role: "system",
-            content:
-              "Extract a structured brand profile from website content. Return strict JSON only. Do not hallucinate competitors.",
-          },
-          {
-            role: "user",
-            content: `Website: ${websiteUrl}\n\nContent:\n${content.slice(0, 12000)}`,
-          },
-        ],
-        temperature: 0.2,
-      }),
-      AI_CALL_TIMEOUT_MS,
-    );
+    try {
+      const completion = await withTimeout(
+        this.getClient().chat.completions.create({
+          model: env.OPENAI_MODEL,
+          response_format: { type: "json_object" },
+          messages: [
+            {
+              role: "system",
+              content:
+                "Extract a structured brand profile from website content. Return strict JSON only. Do not hallucinate competitors.",
+            },
+            {
+              role: "user",
+              content: `Website: ${websiteUrl}\n\nContent:\n${content.slice(0, 12000)}`,
+            },
+          ],
+          temperature: 0.2,
+        }),
+        AI_CALL_TIMEOUT_MS,
+      );
 
-    const raw = completion.choices[0]?.message?.content ?? "{}";
-    return parseBrandProfile(raw, websiteUrl);
+      const raw = completion.choices[0]?.message?.content ?? "{}";
+      return parseBrandProfile(raw, websiteUrl);
+    } catch (error) {
+      throw new AIProviderError(
+        "openai",
+        formatOpenAIErrorMessage(error),
+        error,
+      );
+    }
   }
 
   async evaluateResponse(input: {

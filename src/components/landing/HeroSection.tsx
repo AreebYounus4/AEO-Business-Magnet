@@ -1,3 +1,5 @@
+import { OpenScoreCheckButton } from "@/components/forms/ScoreCheckContext";
+
 export function HeroSection() {
   return (
     <section className="relative overflow-hidden bg-white pb-16 pt-14 md:pb-24 md:pt-20">
@@ -18,9 +20,9 @@ export function HeroSection() {
               Optimization (AEO).
             </p>
             <div className="flex flex-wrap gap-3">
-              <a href="#score" className="btn-red">
+              <OpenScoreCheckButton>
                 Check Your AI Website Score — Free
-              </a>
+              </OpenScoreCheckButton>
               <a
                 href="#framework"
                 className="inline-flex items-center rounded-lg border-2 border-border px-6 py-3 font-bold text-navy hover:border-navy"

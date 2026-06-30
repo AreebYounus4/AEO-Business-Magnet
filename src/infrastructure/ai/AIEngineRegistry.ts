@@ -4,6 +4,7 @@ import { isEngineEnabled } from "../config/env";
 import { OpenAIProvider } from "./OpenAIProvider";
 import { GeminiProvider } from "./GeminiProvider";
 import { PerplexityProvider } from "./PerplexityProvider";
+import { ClaudeProvider } from "./ClaudeProvider";
 
 export class AIEngineRegistry {
   private readonly providers: AIEngineProvider[];
@@ -13,6 +14,7 @@ export class AIEngineRegistry {
       new OpenAIProvider(),
       new GeminiProvider(),
       new PerplexityProvider(),
+      new ClaudeProvider(),
     ];
   }
 

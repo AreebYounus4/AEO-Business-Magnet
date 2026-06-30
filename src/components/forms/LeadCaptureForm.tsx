@@ -28,7 +28,11 @@ const BASE_STEPS = [
   "Preparing report",
 ];
 
-export function LeadCaptureForm() {
+interface LeadCaptureFormProps {
+  variant?: "modal" | "inline";
+}
+
+export function LeadCaptureForm({ variant = "inline" }: LeadCaptureFormProps) {
   const router = useRouter();
   const [form, setForm] = useState({
     fullName: "",
@@ -110,16 +114,34 @@ export function LeadCaptureForm() {
     return <LoadingState steps={steps} currentStep={currentStep} />;
   }
 
+  const formClassName =
+    variant === "modal"
+      ? "rounded-2xl bg-white p-7 pt-12 text-navy"
+      : "rounded-2xl bg-white p-7 text-navy shadow-xl";
+
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="rounded-2xl bg-white p-7 text-navy shadow-xl"
-      noValidate
-    >
-      <h3 className="mb-1 text-xl font-extrabold">Get Your AI Visibility Score</h3>
-      <p className="mb-6 text-sm text-text-muted">
-        Free scan across enabled AI engines. Results in under a minute.
-      </p>
+    <form onSubmit={handleSubmit} className={formClassName} noValidate>
+      {variant === "modal" ? (
+        <>
+          <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-red/20 bg-red/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-red">
+            <span className="h-1.5 w-1.5 rounded-full bg-red" />
+            AI Score Check · Live
+          </div>
+          <h3 className="mb-1 text-2xl font-extrabold text-navy">
+            Check Your Website&apos;s AI Search Score — Free
+          </h3>
+          <p className="mb-6 text-sm text-text-muted">
+            See how your brand appears across enabled AI engines in under 60 seconds.
+          </p>
+        </>
+      ) : (
+        <>
+          <h3 className="mb-1 text-xl font-extrabold">Get Your AI Visibility Score</h3>
+          <p className="mb-6 text-sm text-text-muted">
+            Free scan across enabled AI engines. Results in under a minute.
+          </p>
+        </>
+      )}
 
       {submitError ? (
         <div className="mb-4">

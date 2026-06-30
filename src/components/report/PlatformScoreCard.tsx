@@ -4,6 +4,7 @@ const engineLabels: Record<string, { label: string; color: string }> = {
   openai: { label: "ChatGPT", color: "#10A37F" },
   gemini: { label: "Gemini", color: "#4285F4" },
   perplexity: { label: "Perplexity", color: "#1B2B3B" },
+  claude: { label: "Claude", color: "#D97757" },
 };
 
 function scoreColor(score: number): string {

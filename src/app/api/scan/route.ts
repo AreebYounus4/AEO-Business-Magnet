@@ -35,6 +35,19 @@ export async function POST(request: Request) {
       partialResults: result.partialResults ?? false,
     });
   } catch (error) {
+    if (error instanceof SyntaxError) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: {
+            code: "INVALID_JSON",
+            message: "Request body must be valid JSON.",
+          },
+        },
+        { status: 400 },
+      );
+    }
+
     if (error instanceof ZodError) {
       return NextResponse.json(
         {

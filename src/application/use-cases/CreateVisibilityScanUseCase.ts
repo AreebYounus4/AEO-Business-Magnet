@@ -134,10 +134,11 @@ export class CreateVisibilityScanUseCase {
         partialResults,
       };
     } catch (error) {
+      const originalMessage =
+        error instanceof Error ? error.message : "Scan failed";
       scan.status = "failed";
       scan.completedAt = nowIso();
-      scan.errorMessage =
-        error instanceof Error ? error.message : "Scan failed";
+      scan.errorMessage = originalMessage;
       await this.scanRepository.updateScan(scan);
 
       await this.leadRepository.updateLeadScore({
@@ -154,11 +155,9 @@ export class CreateVisibilityScanUseCase {
         throw error;
       }
 
-      throw new AppError(
-        "SCAN_FAILED",
-        "Unable to complete scan. Please try again.",
-        500,
-      );
+      console.error("Scan pipeline failed:", error);
+
+      throw new AppError("SCAN_FAILED", originalMessage, 500);
     }
   }
 }

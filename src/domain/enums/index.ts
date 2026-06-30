@@ -1,4 +1,4 @@
-export const AI_ENGINES = ["openai", "gemini", "perplexity"] as const;
+export const AI_ENGINES = ["openai", "gemini", "perplexity", "claude"] as const;
 export type AIEngine = (typeof AI_ENGINES)[number];
 
 export const PROMPT_CATEGORIES = [

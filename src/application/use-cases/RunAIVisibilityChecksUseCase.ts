@@ -5,6 +5,7 @@ import type { AIObservation } from "@/domain/entities/AIObservation";
 import { evaluateVisibilityResponse } from "@/domain/services/VisibilityEvaluator";
 import { OpenAIBrandExtractor } from "@/infrastructure/ai/OpenAIProvider";
 import { logger } from "@/infrastructure/logging/logger";
+import { AppError } from "@/lib/errors/AppError";
 
 const log = logger();
 const CONCURRENCY = 3;
@@ -81,7 +82,11 @@ export class RunAIVisibilityChecksUseCase {
     );
 
     if (allFailed) {
-      throw new Error("All enabled AI providers failed.");
+      throw new AppError(
+        "AI_PROVIDERS_FAILED",
+        "All enabled AI providers failed. Check your API keys and billing settings.",
+        502,
+      );
     }
 
     return {
