@@ -16,6 +16,10 @@ export interface Lead {
   status: LeadStatus;
   createdAt: string;
   updatedAt: string;
+  company?: string;
+  revenue?: string;
+  market?: string;
+  challenge?: string;
 }
 
 export interface UpdateLeadScoreInput {

@@ -13,7 +13,7 @@ Calibrate Commerce lead magnet app for AI visibility scanning. Users submit thei
 ## Getting Started
 
 1. Copy `.env.example` to `.env` and fill in credentials.
-2. Create a Google Sheet with tabs: `Leads`, `Scans`, `Prompts`, `AI_Observations`, `Reports` (header rows per spec).
+2. Create a Google Sheet with tabs: `Leads`, `Scans`, `Prompts`, `AI_Observations`, `Reports` (header rows per spec). The `Leads` tab should include columns through `Challenge` for audit booking fields (`Company`, `Revenue`, `Market`, `Challenge`).
 3. Share the sheet with your service account email as Editor.
 4. Install and run:
 
