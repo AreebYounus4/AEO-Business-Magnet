@@ -99,7 +99,7 @@ SCAN_OK_BODY=$(echo "$SCAN_OK" | sed '$d')
 
 if [ "$SCAN_OK_CODE" = "200" ] && echo "$SCAN_OK_BODY" | grep -q 'reportUrl'; then
   pass "Scan API completes and returns reportUrl (200)"
-  REPORT_URL=$(echo "$SCAN_OK_BODY" | grep -o '"/report/[^"]*"' | head -1 | tr -d '"')
+  REPORT_URL=$(echo "$SCAN_OK_BODY" | grep -oE '/report/[^"]+' | head -1 || true)
   if [ -n "$REPORT_URL" ]; then
     REPORT_CODE=$(curl -s -o /tmp/report.html -w "%{http_code}" "$BASE_URL$REPORT_URL")
     if [ "$REPORT_CODE" = "200" ] && grep -q "Platform Scores" /tmp/report.html; then
