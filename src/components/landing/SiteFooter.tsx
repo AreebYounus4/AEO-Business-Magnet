@@ -1,6 +1,8 @@
 import Link from "next/link";
 
 export function SiteFooter() {
+  const year = new Date().getFullYear();
+
   return (
     <footer className="footer" role="contentinfo">
       <div className="wrap">
@@ -46,7 +48,7 @@ export function SiteFooter() {
           </div>
         </div>
         <div className="footer-bottom">
-          <div>© 2025 Calibrate Commerce. All rights reserved.</div>
+          <div>© {year} Calibrate Commerce. All rights reserved.</div>
           <div className="footer-bottom-right" role="navigation" aria-label="Legal">
             <Link href="/privacy">Privacy Policy</Link>
             <Link href="/terms">Terms</Link>

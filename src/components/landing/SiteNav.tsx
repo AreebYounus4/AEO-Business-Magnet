@@ -83,7 +83,7 @@ export function SiteNav() {
 
         <div className="nav-cta">
           <a
-            href="#audit"
+            href="#how"
             className="btn btn-outline nav-cta-secondary"
           >
             See How We Work
@@ -127,7 +127,7 @@ export function SiteNav() {
             ))}
           </div>
           <div className="nav-mobile-actions">
-            <a href="#audit" className="btn btn-outline" onClick={closeMenu}>
+            <a href="#how" className="btn btn-outline" onClick={closeMenu}>
               See How We Work
             </a>
             <OpenScoreCheckButton

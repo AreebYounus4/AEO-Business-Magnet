@@ -14,7 +14,6 @@ import { WhyCalibrateSection } from "@/components/landing/WhyCalibrateSection";
 import { ClientsSection } from "@/components/landing/ClientsSection";
 import { DemoSection } from "@/components/landing/DemoSection";
 import { FAQSection } from "@/components/landing/FAQSection";
-import { AuditSection } from "@/components/landing/AuditSection";
 import { SiteFooter } from "@/components/landing/SiteFooter";
 import { CursorGlow } from "@/components/landing/CursorGlow";
 import { PremiumEffects } from "@/components/landing/PremiumEffects";
@@ -41,7 +40,6 @@ export function HomePage() {
           <ClientsSection />
           <DemoSection />
           <FAQSection />
-          <AuditSection />
         </main>
         <SiteFooter />
       </PremiumEffects>

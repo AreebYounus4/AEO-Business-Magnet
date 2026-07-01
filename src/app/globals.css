@@ -418,6 +418,7 @@ body {
 
 .hero-vis {
   position: relative;
+  padding: 2rem 0 2.25rem;
 }
 
 .ai-card {
@@ -516,6 +517,7 @@ body {
 
 .fp {
   position: absolute;
+  z-index: 2;
   background: #fff;
   border: 1px solid var(--border);
   border-radius: 100px;
@@ -531,14 +533,14 @@ body {
 }
 
 .fp1 {
-  top: -18px;
-  right: 30px;
+  top: 0;
+  right: 1.5rem;
   animation-delay: 0s;
 }
 
 .fp2 {
-  bottom: 20px;
-  left: -25px;
+  bottom: 0;
+  left: 1.5rem;
   animation-delay: 1.6s;
 }
 
