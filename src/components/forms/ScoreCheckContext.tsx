@@ -5,6 +5,7 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useRef,
   useState,
   type CSSProperties,
   type ReactNode,
@@ -21,9 +22,19 @@ const ScoreCheckContext = createContext<ScoreCheckContextValue | null>(null);
 
 export function ScoreCheckProvider({ children }: { children: ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
+  const triggerRef = useRef<HTMLElement | null>(null);
 
-  const open = useCallback(() => setIsOpen(true), []);
-  const close = useCallback(() => setIsOpen(false), []);
+  const open = useCallback(() => {
+    triggerRef.current = document.activeElement as HTMLElement;
+    setIsOpen(true);
+  }, []);
+
+  const close = useCallback(() => {
+    setIsOpen(false);
+    const trigger = triggerRef.current;
+    triggerRef.current = null;
+    window.requestAnimationFrame(() => trigger?.focus());
+  }, []);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -58,17 +69,28 @@ interface OpenScoreCheckButtonProps {
   children: ReactNode;
   className?: string;
   style?: CSSProperties;
+  onOpen?: () => void;
 }
 
 export function OpenScoreCheckButton({
   children,
   className = "btn btn-red",
   style,
+  onOpen,
 }: OpenScoreCheckButtonProps) {
   const { open } = useScoreCheck();
 
   return (
-    <button type="button" className={className} style={style} onClick={open}>
+    <button
+      type="button"
+      className={className}
+      style={style}
+      onClick={() => {
+        onOpen?.();
+        open();
+      }}
+      aria-haspopup="dialog"
+    >
       {children}
     </button>
   );

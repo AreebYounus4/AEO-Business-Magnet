@@ -37,10 +37,10 @@ export function PlatformScoreCard({ platformScores }: PlatformScoreCardProps) {
         return (
           <div
             key={item.platform}
-            className="score-row rounded-xl border border-border bg-white p-5"
+            className="score-row report-score-row rounded-xl border border-border bg-white p-4 sm:p-5"
           >
-            <div className="mb-3 flex items-center justify-between gap-4">
-              <div className="flex items-center gap-3">
+            <div className="mb-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
+              <div className="flex min-w-0 items-center gap-3">
                 {platformId ? (
                   <span
                     className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-lg"
@@ -62,12 +62,12 @@ export function PlatformScoreCard({ platformScores }: PlatformScoreCardProps) {
                     {meta.label[0]}
                   </span>
                 )}
-                <div>
+                <div className="min-w-0">
                   <div className="font-bold text-navy">{meta.label}</div>
                   <div className="text-xs text-text-muted">{item.reason}</div>
                 </div>
               </div>
-              <div className="text-right">
+              <div className="shrink-0 text-left sm:text-right">
                 <div className="text-2xl font-extrabold text-navy">{item.score}</div>
                 <div className="text-xs text-text-muted">/100</div>
               </div>

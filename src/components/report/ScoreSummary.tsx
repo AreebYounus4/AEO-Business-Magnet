@@ -24,9 +24,9 @@ export function ScoreSummary({
   generatedAt,
 }: ScoreSummaryProps) {
   return (
-    <div className="rounded-2xl border border-border bg-white p-8 shadow-lg">
+    <div className="report-summary rounded-2xl border border-border bg-white p-5 shadow-lg sm:p-8">
       <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-        <div>
+        <div className="min-w-0">
           <p className="mb-1 text-xs font-bold uppercase tracking-wider text-text-muted">
             AI Visibility Report
           </p>

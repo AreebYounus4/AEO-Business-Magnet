@@ -45,6 +45,7 @@ function getPlatformMeta(engine: string) {
 interface LeadCaptureFormProps {
   variant?: "modal" | "inline";
   onClose?: () => void;
+  titleId?: string;
 }
 
 function ScoreIcon() {
@@ -58,7 +59,10 @@ function ScoreIcon() {
   );
 }
 
-export function LeadCaptureForm({ variant = "inline" }: LeadCaptureFormProps) {
+export function LeadCaptureForm({
+  variant = "inline",
+  titleId,
+}: LeadCaptureFormProps) {
   const router = useRouter();
   const [form, setForm] = useState({
     fullName: "",
@@ -108,6 +112,7 @@ export function LeadCaptureForm({ variant = "inline" }: LeadCaptureFormProps) {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (isSubmitting) return;
     setSubmitError("");
     setErrors({});
 
@@ -168,7 +173,10 @@ export function LeadCaptureForm({ variant = "inline" }: LeadCaptureFormProps) {
             <span className="h-1.5 w-1.5 rounded-full bg-red" />
             AI Score Check · Live
           </div>
-          <h3 className="mb-2 text-[clamp(1.3rem,2.5vw,1.8rem)] font-extrabold leading-tight tracking-tight text-white">
+          <h3
+            id={titleId}
+            className="mb-2 text-[clamp(1.2rem,4.5vw,1.8rem)] font-extrabold leading-tight tracking-tight text-white"
+          >
             Check Your Website&apos;s
             <br />
             AI Search Score, Free
@@ -225,7 +233,7 @@ export function LeadCaptureForm({ variant = "inline" }: LeadCaptureFormProps) {
             </div>
           ) : null}
 
-          <div className="mb-5 grid grid-cols-1 gap-x-[0.9rem] gap-y-[0.85rem] sm:grid-cols-2">
+          <div className="mb-5 grid grid-cols-1 gap-x-[0.9rem] gap-y-[0.85rem] md:grid-cols-2">
             <Input
               label="Full Name *"
               name="fullName"
@@ -269,14 +277,15 @@ export function LeadCaptureForm({ variant = "inline" }: LeadCaptureFormProps) {
               autoComplete="url"
             />
 
-            <label className="col-span-1 flex cursor-pointer items-start gap-2 text-[0.78rem] leading-relaxed text-text-muted sm:col-span-2">
+            <label className="col-span-1 flex cursor-pointer items-start gap-2.5 text-[0.78rem] leading-relaxed text-text-muted md:col-span-2">
               <input
                 type="checkbox"
                 checked={form.consentAccepted}
                 onChange={(e) =>
                   setForm({ ...form, consentAccepted: e.target.checked })
                 }
-                className="mt-0.5 h-[15px] w-[15px] shrink-0 accent-red"
+                className="mt-0.5 h-[18px] w-[18px] shrink-0 accent-red"
+                aria-invalid={Boolean(errors.consentAccepted)}
               />
               <span>
                 I agree to receive my AI visibility report and understand my data
@@ -284,7 +293,10 @@ export function LeadCaptureForm({ variant = "inline" }: LeadCaptureFormProps) {
               </span>
             </label>
             {errors.consentAccepted ? (
-              <p className="col-span-1 text-[0.72rem] text-red sm:col-span-2">
+              <p
+                className="col-span-1 text-[0.72rem] text-red md:col-span-2"
+                role="alert"
+              >
                 {errors.consentAccepted}
               </p>
             ) : null}
@@ -292,7 +304,8 @@ export function LeadCaptureForm({ variant = "inline" }: LeadCaptureFormProps) {
 
           <button
             type="submit"
-            className="flex w-full items-center justify-center gap-2 rounded-lg bg-red px-5 py-[15px] text-base font-bold tracking-tight text-white transition hover:-translate-y-px hover:bg-red-dark hover:shadow-[0_8px_24px_rgba(218,48,79,0.35)]"
+            disabled={isSubmitting}
+            className="flex w-full items-center justify-center gap-2 rounded-lg bg-red px-5 py-[15px] text-base font-bold tracking-tight text-white transition hover:-translate-y-px hover:bg-red-dark hover:shadow-[0_8px_24px_rgba(218,48,79,0.35)] disabled:cursor-not-allowed disabled:opacity-70"
           >
             <ScoreIcon />
             See My AI Website Score Now
@@ -379,7 +392,7 @@ export function LeadCaptureForm({ variant = "inline" }: LeadCaptureFormProps) {
         <p className="-mt-4 mb-4 text-sm text-red">{errors.consentAccepted}</p>
       ) : null}
 
-      <Button type="submit" className="w-full justify-center">
+      <Button type="submit" className="w-full justify-center" disabled={isSubmitting}>
         See My AI Website Score Now
       </Button>
       <p className="mt-4 text-center text-xs text-text-muted">
