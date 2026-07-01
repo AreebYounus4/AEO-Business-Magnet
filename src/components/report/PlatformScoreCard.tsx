@@ -1,11 +1,11 @@
+import Image from "next/image";
 import type { PlatformScore } from "@/domain/entities/PlatformScore";
+import type { PlatformId } from "@/components/landing/logos";
+import { ENGINE_TO_PLATFORM, PLATFORM_META } from "@/components/landing/logos";
 
-const engineLabels: Record<string, { label: string; color: string }> = {
-  openai: { label: "ChatGPT", color: "#10A37F" },
-  gemini: { label: "Gemini", color: "#4285F4" },
-  perplexity: { label: "Perplexity", color: "#1B2B3B" },
-  claude: { label: "Claude", color: "#D97757" },
-};
+interface PlatformScoreCardProps {
+  platformScores: PlatformScore[];
+}
 
 function scoreColor(score: number): string {
   if (score <= 30) return "bg-red";
@@ -15,7 +15,11 @@ function scoreColor(score: number): string {
   return "bg-emerald-600";
 }
 
-export function PlatformScoreCard({ platformScores }: { platformScores: PlatformScore[] }) {
+function getPlatformId(engine: string): PlatformId | null {
+  return ENGINE_TO_PLATFORM[engine] ?? null;
+}
+
+export function PlatformScoreCard({ platformScores }: PlatformScoreCardProps) {
   if (platformScores.length === 0) {
     return (
       <p className="text-sm text-text-muted">No platform scores available.</p>
@@ -25,23 +29,39 @@ export function PlatformScoreCard({ platformScores }: { platformScores: Platform
   return (
     <div className="space-y-4">
       {platformScores.map((item) => {
-        const meta = engineLabels[item.platform] ?? {
-          label: item.platform,
-          color: "#071932",
-        };
+        const platformId = getPlatformId(item.platform);
+        const meta = platformId
+          ? PLATFORM_META[platformId]
+          : { label: item.platform, bg: "#071932", logo: "" };
+
         return (
           <div
             key={item.platform}
-            className="rounded-xl border border-border bg-white p-5"
+            className="score-row rounded-xl border border-border bg-white p-5"
           >
             <div className="mb-3 flex items-center justify-between gap-4">
               <div className="flex items-center gap-3">
-                <span
-                  className="flex h-10 w-10 items-center justify-center rounded-lg text-sm font-bold text-white"
-                  style={{ background: meta.color }}
-                >
-                  {meta.label[0]}
-                </span>
+                {platformId ? (
+                  <span
+                    className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-lg"
+                    style={{ background: meta.bg }}
+                  >
+                    <Image
+                      src={meta.logo}
+                      alt=""
+                      width={22}
+                      height={22}
+                      className="object-contain"
+                    />
+                  </span>
+                ) : (
+                  <span
+                    className="flex h-10 w-10 items-center justify-center rounded-lg text-sm font-bold text-white"
+                    style={{ background: meta.bg }}
+                  >
+                    {meta.label[0]}
+                  </span>
+                )}
                 <div>
                   <div className="font-bold text-navy">{meta.label}</div>
                   <div className="text-xs text-text-muted">{item.reason}</div>

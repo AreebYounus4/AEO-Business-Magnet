@@ -31,7 +31,7 @@ export function AuditSection() {
               style={{ color: "rgba(255,255,255,.62)", marginBottom: 0 }}
             >
               Uncover the opportunities to increase visibility, trust, and demand.
-              Our AI Visibility Audit gives you a clear picture of where you stand —
+              Our AI Visibility Audit gives you a clear picture of where you stand,
               and a strategic roadmap to close the gaps.
             </p>
 
@@ -51,7 +51,7 @@ export function AuditSection() {
             <div className="form-card">
               {submitted ? (
                 <>
-                  <div className="form-title">Thank you — we&apos;ll be in touch.</div>
+                  <div className="form-title">Thank you, we&apos;ll be in touch.</div>
                   <p className="form-sub" style={{ marginBottom: 0 }}>
                     A senior Calibrate strategist will review your details and
                     respond within one business day.

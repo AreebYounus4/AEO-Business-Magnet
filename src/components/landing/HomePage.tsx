@@ -16,30 +16,35 @@ import { DemoSection } from "@/components/landing/DemoSection";
 import { FAQSection } from "@/components/landing/FAQSection";
 import { AuditSection } from "@/components/landing/AuditSection";
 import { SiteFooter } from "@/components/landing/SiteFooter";
+import { CursorGlow } from "@/components/landing/CursorGlow";
+import { PremiumEffects } from "@/components/landing/PremiumEffects";
 
 export function HomePage() {
   return (
     <ScoreCheckProvider>
-      <a href="#main" className="skip">
-        Skip to content
-      </a>
-      <SiteNav />
-      <main id="main">
-        <HeroSection />
-        <LogoStrip />
-        <ProblemSection />
-        <BigQuestionSection />
-        <HowBrandsWinSection />
-        <FrameworkSection />
-        <OutcomesSection />
-        <TrustSignalsSection />
-        <WhyCalibrateSection />
-        <ClientsSection />
-        <DemoSection />
-        <FAQSection />
-        <AuditSection />
-      </main>
-      <SiteFooter />
+      <CursorGlow />
+      <PremiumEffects>
+        <a href="#main" className="skip">
+          Skip to content
+        </a>
+        <SiteNav />
+        <main id="main">
+          <HeroSection />
+          <LogoStrip />
+          <ProblemSection />
+          <BigQuestionSection />
+          <HowBrandsWinSection />
+          <FrameworkSection />
+          <OutcomesSection />
+          <TrustSignalsSection />
+          <WhyCalibrateSection />
+          <ClientsSection />
+          <DemoSection />
+          <FAQSection />
+          <AuditSection />
+        </main>
+        <SiteFooter />
+      </PremiumEffects>
     </ScoreCheckProvider>
   );
 }

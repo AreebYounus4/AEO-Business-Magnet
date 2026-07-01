@@ -15,7 +15,7 @@ export function BigQuestionSection() {
           </h2>
           <p className="big-q-sub">
             If not, your competitors may be winning consideration before a
-            customer ever reaches your website. That&apos;s the opportunity — and
+            customer ever reaches your website. That&apos;s the opportunity, and
             the urgency.
           </p>
           <OpenScoreCheckButton className="btn btn-red btn-lg">

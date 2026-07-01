@@ -1,4 +1,5 @@
 import { QUERY_CARDS } from "@/components/landing/content";
+import { PlatformLogo } from "@/components/landing/PlatformLogo";
 
 export function ProblemSection() {
   return (
@@ -16,7 +17,7 @@ export function ProblemSection() {
           </h2>
           <p className="b-lg" style={{ color: "rgba(255,255,255,.62)" }}>
             Traditional SEO was built for rankings. AI search is built for answers.
-            Today, buyers ask AI — and AI doesn&apos;t simply show websites. It
+            Today, buyers ask AI, and AI doesn&apos;t simply show websites. It
             recommends brands.
           </p>
         </div>
@@ -25,13 +26,8 @@ export function ProblemSection() {
           {QUERY_CARDS.map((card) => (
             <div key={card.query} className="query-card" role="listitem">
               <div className="qc-platform">
-                <div
-                  className="qc-icon"
-                  style={{ background: card.iconBg }}
-                >
-                  {card.icon}
-                </div>
-                <span className="qc-name">{card.platform}</span>
+                <PlatformLogo platform={card.platform} size={14} />
+                <span className="qc-name">{card.platformLabel}</span>
               </div>
               <div className="qc-q">&ldquo;{card.query}&rdquo;</div>
               <div

@@ -1,28 +1,6 @@
-export const LOGO_STRIP = [
-  "noon",
-  "VIRGIN",
-  "FAB",
-  "ekar",
-  "namshi",
-  "Papa Johns",
-  "ZAIN",
-  "HP",
-];
+import type { PlatformId } from "./logos";
 
-export const CLIENT_LOGOS = [
-  "noon",
-  "VIRGIN",
-  "FAB",
-  "ekar",
-  "namshi",
-  "Papa Johns",
-  "ZAIN",
-  "HP",
-  "ADCB",
-  "EMAAR",
-  "du",
-  "IKEA",
-];
+export { LOGO_STRIP, CLIENT_LOGOS, CALIBRATE_LOGO } from "./logos";
 
 export const HERO_TRUST_STATS = [
   { num: "12+", label: "Years in market" },
@@ -31,53 +9,53 @@ export const HERO_TRUST_STATS = [
   { num: "6+", label: "Markets served" },
 ];
 
-export const QUERY_CARDS = [
+export const QUERY_CARDS: {
+  platform: PlatformId;
+  platformLabel: string;
+  query: string;
+  note: string;
+  visible: boolean;
+}[] = [
   {
-    icon: "C",
-    iconBg: "#10A37F",
-    platform: "ChatGPT",
+    platform: "chatgpt",
+    platformLabel: "ChatGPT",
     query: "Who is the best agency for SEO in the UAE?",
-    note: "Your brand — not mentioned",
+    note: "Your brand, not mentioned",
     visible: false,
   },
   {
-    icon: "G",
-    iconBg: "linear-gradient(135deg,#4285F4,#34A853)",
-    platform: "Gemini",
+    platform: "gemini",
+    platformLabel: "Gemini",
     query: "What is the best CRM for real estate in Saudi Arabia?",
-    note: "Your brand — not cited",
+    note: "Your brand, not cited",
     visible: false,
   },
   {
-    icon: "P",
-    iconBg: "#1B2B3B",
-    platform: "Perplexity",
+    platform: "perplexity",
+    platformLabel: "Perplexity",
     query: "What are the top ecommerce platforms for fashion brands?",
-    note: "Your brand — no entity signal",
+    note: "Your brand, no entity signal",
     visible: false,
   },
   {
-    icon: "Cl",
-    iconBg: "#C96A42",
-    platform: "Claude",
+    platform: "claude",
+    platformLabel: "Claude",
     query: "Which university should I consider for an MBA in Dubai?",
-    note: "Your brand — not recommended",
+    note: "Your brand, not recommended",
     visible: false,
   },
   {
-    icon: "G",
-    iconBg: "#4285F4",
-    platform: "Google AI",
+    platform: "google-ai",
+    platformLabel: "Google AI",
     query: "What are the top brands in this category in GCC?",
-    note: "Calibrate clients — featured",
+    note: "Calibrate clients, featured",
     visible: true,
   },
   {
-    icon: "C",
-    iconBg: "#10A37F",
-    platform: "ChatGPT",
+    platform: "chatgpt",
+    platformLabel: "ChatGPT",
     query: "Which delivery service is most reliable in the UAE right now?",
-    note: "Your brand — not visible",
+    note: "Your brand, not visible",
     visible: false,
   },
 ];
@@ -115,7 +93,7 @@ export const FRAMEWORK_STEPS = [
     icon: "🔍",
     num: "Step 01",
     title: "AI Visibility Audit",
-    desc: "Understand how visible your brand is across ChatGPT, Gemini, Claude, Perplexity, and Google AI. We map exactly where you appear, where you're absent, and why — across every relevant query in your category.",
+    desc: "Understand how visible your brand is across ChatGPT, Gemini, Claude, Perplexity, and Google AI. We map exactly where you appear, where you're absent, and why, across every relevant query in your category.",
   },
   {
     icon: "⚙️",
@@ -139,7 +117,7 @@ export const FRAMEWORK_STEPS = [
     icon: "📊",
     num: "Step 05",
     title: "Visibility Monitoring",
-    desc: "Track your AI visibility, recommendation presence, citation growth, and discoverability performance over time. Monthly reporting tied to business outcomes — not just presence metrics.",
+    desc: "Track your AI visibility, recommendation presence, citation growth, and discoverability performance over time. Monthly reporting tied to business outcomes, not just presence metrics.",
   },
 ];
 
@@ -152,7 +130,7 @@ export const OUTCOMES = [
   {
     icon: "🎯",
     title: "More Qualified Traffic",
-    desc: "Attract visitors who arrive already informed and closer to making a decision. AI-referred visitors have higher intent than typical organic traffic — they've been pre-sold by an AI recommendation.",
+    desc: "Attract visitors who arrive already informed and closer to making a decision. AI-referred visitors have higher intent than typical organic traffic because they have been pre-sold by an AI recommendation.",
   },
   {
     icon: "🏆",
@@ -162,7 +140,7 @@ export const OUTCOMES = [
   {
     icon: "💡",
     title: "Higher-Intent Leads",
-    desc: "Generate opportunities from prospects actively researching solutions. These are buyers deep in their decision process — pre-qualified by the AI that sent them to you.",
+    desc: "Generate opportunities from prospects actively researching solutions. These are buyers deep in their decision process, pre-qualified by the AI that sent them to you.",
   },
   {
     icon: "📉",
@@ -202,7 +180,7 @@ export const WHY_CARDS = [
   {
     icon: "🏆",
     title: "Chosen",
-    desc: "When buyers are ready to act, your brand becomes the recommendation. The full framework builds toward this outcome — converting discoverability into commercial growth.",
+    desc: "When buyers are ready to act, your brand becomes the recommendation. The full framework builds toward this outcome, converting discoverability into commercial growth.",
   },
   {
     icon: "📊",
@@ -220,7 +198,7 @@ export const DEMO_SIGNALS = [
   {
     icon: "🏛️",
     title: "Entity Authority",
-    desc: "A clear, consistent brand entity that AI knowledge graphs recognize as authoritative within your category — the foundation of all AI citation.",
+    desc: "A clear, consistent brand entity that AI knowledge graphs recognize as authoritative within your category, the foundation of all AI citation.",
   },
   {
     icon: "📋",
@@ -261,61 +239,61 @@ export const FAQ_ITEMS: {
     category: "aeo",
     question: "Why doesn't ranking #1 on Google mean I'm recommended by AI?",
     answer:
-      "Traditional SEO was built for rankings in blue-link search results. AI search is built for answers and recommendations. AI platforms don't show websites — they synthesize information and recommend brands based on entity authority, content comprehensiveness, trusted citations, and credibility signals. A brand can rank #1 on Google and still be completely absent from AI-generated recommendations.",
+      "Traditional SEO was built for rankings in blue-link search results. AI search is built for answers and recommendations. AI platforms don't show websites. They synthesize information and recommend brands based on entity authority, content comprehensiveness, trusted citations, and credibility signals. A brand can rank #1 on Google and still be completely absent from AI-generated recommendations.",
   },
   {
     category: "aeo",
     question: "Which AI platforms does Calibrate Commerce optimize for?",
     answer:
-      "We optimize for visibility across ChatGPT, Google Gemini, Anthropic Claude, Perplexity, and Google AI Overviews — the primary AI platforms where buying journeys now begin. Each platform has different ranking signals, content requirements, and citation criteria, and our framework addresses all of them systematically.",
+      "We optimize for visibility across ChatGPT, Google Gemini, Anthropic Claude, Perplexity, and Google AI Overviews, the primary AI platforms where buying journeys now begin. Each platform has different ranking signals, content requirements, and citation criteria, and our framework addresses all of them systematically.",
   },
   {
     category: "aeo",
     question: "How does AI decide which brands to recommend?",
     answer:
-      "AI recommends brands it can Find (discover your content), Understand (accurately comprehend what you do), Trust (verified authority and credibility signals), Verify (validate claims through trusted third-party sources), and Recommend (confidently present when buyers are ready to decide). Most brands are missing one or more of these signals — our framework builds every one of them.",
+      "AI recommends brands it can Find (discover your content), Understand (accurately comprehend what you do), Trust (verified authority and credibility signals), Verify (validate claims through trusted third-party sources), and Recommend (confidently present when buyers are ready to decide). Most brands are missing one or more of these signals. Our framework builds every one of them.",
   },
   {
     category: "aeo",
     question: "What is an AI Visibility Audit?",
     answer:
-      "An AI Visibility Audit is our diagnostic assessment of how your brand appears — or doesn't — across ChatGPT, Gemini, Claude, Perplexity, and Google AI. It identifies specific gaps in your entity signals, content comprehensiveness, authority citations, and structured data that prevent AI platforms from recommending your brand, and provides a prioritized action plan to close those gaps.",
+      "An AI Visibility Audit is our diagnostic assessment of how your brand appears, or fails to appear, across ChatGPT, Gemini, Claude, Perplexity, and Google AI. It identifies specific gaps in your entity signals, content comprehensiveness, authority citations, and structured data that prevent AI platforms from recommending your brand, and provides a prioritized action plan to close those gaps.",
   },
   {
     category: "aeo",
     question: "Do I still need traditional SEO if I invest in AEO?",
     answer:
-      "Yes. Traditional search remains a significant channel, and strong technical SEO, content quality, and authority signals underpin both Google rankings and AI visibility. The most effective approach combines traditional SEO foundations with AEO-specific optimizations — our framework addresses both simultaneously, because the signals that power AI visibility also strengthen traditional search performance.",
+      "Yes. Traditional search remains a significant channel, and strong technical SEO, content quality, and authority signals underpin both Google rankings and AI visibility. The most effective approach combines traditional SEO foundations with AEO-specific optimizations. Our framework addresses both simultaneously, because the signals that power AI visibility also strengthen traditional search performance.",
   },
   {
     category: "process",
     question: "How long does it take to appear in AI recommendations?",
     answer:
-      "Initial improvements in AI citation signals can emerge within 6–12 weeks of structured optimization work. Meaningful, consistent AI recommendation presence typically builds over 3–6 months as entity authority and content comprehensiveness accumulate. AI platforms continuously update their knowledge, so progress is measurable and trackable. We set clear milestone expectations during onboarding and report against them monthly.",
+      "Initial improvements in AI citation signals can emerge within 6 to 12 weeks of structured optimization work. Meaningful, consistent AI recommendation presence typically builds over 3 to 6 months as entity authority and content comprehensiveness accumulate. AI platforms continuously update their knowledge, so progress is measurable and trackable. We set clear milestone expectations during onboarding and report against them monthly.",
   },
   {
     category: "process",
     question: "How do you measure AI search visibility?",
     answer:
-      "We measure AI visibility through systematic query monitoring across AI platforms, tracking citation frequency, brand recommendation rate versus competitors, Share of AI Voice, Google AI Overview appearances, and correlated changes in brand search volume and direct traffic. Monthly reports tie these metrics to commercial outcomes — not just presence data.",
+      "We measure AI visibility through systematic query monitoring across AI platforms, tracking citation frequency, brand recommendation rate versus competitors, Share of AI Voice, Google AI Overview appearances, and correlated changes in brand search volume and direct traffic. Monthly reports tie these metrics to commercial outcomes, not just presence data.",
   },
   {
     category: "process",
     question: "What does the AI Visibility Audit booking involve?",
     answer:
-      "After you submit your details, a senior Calibrate strategist will conduct a pre-call diagnostic of your brand's current visibility across key AI platforms. The audit session is a focused 45–60 minute conversation covering your specific visibility gaps, the most impactful opportunities in your category, and a strategic direction tailored to your commercial goals. There is no obligation and no generic pitch.",
+      "After you submit your details, a senior Calibrate strategist will conduct a pre-call diagnostic of your brand's current visibility across key AI platforms. The audit session is a focused 45 to 60 minute conversation covering your specific visibility gaps, the most impactful opportunities in your category, and a strategic direction tailored to your commercial goals. There is no obligation and no generic pitch.",
   },
   {
     category: "process",
     question: "Do you guarantee AI search results?",
     answer:
-      "No. AI platforms change their algorithms and knowledge bases continuously, and no credible partner can guarantee specific citation outcomes. What we commit to is a rigorous, transparent strategy with measurable outputs: visibility growth, citation frequency, and commercial outcomes. Our accountability model is tied to business results — not promises no one can keep.",
+      "No. AI platforms change their algorithms and knowledge bases continuously, and no credible partner can guarantee specific citation outcomes. What we commit to is a rigorous, transparent strategy with measurable outputs: visibility growth, citation frequency, and commercial outcomes. Our accountability model is tied to business results, not promises no one can keep.",
   },
   {
     category: "markets",
     question: "What markets does Calibrate Commerce serve?",
     answer:
-      "Calibrate Commerce works with brands across UAE, Saudi Arabia, Kuwait, Qatar, Bahrain, Oman, the UK, Europe, and the US. We have particular depth in GCC ecommerce, retail, DTC, and enterprise brands — including bilingual Arabic and English strategy for markets where both languages drive significant search and AI discovery volume.",
+      "Calibrate Commerce works with brands across UAE, Saudi Arabia, Kuwait, Qatar, Bahrain, Oman, the UK, Europe, and the US. We have particular depth in GCC ecommerce, retail, DTC, and enterprise brands, including bilingual Arabic and English strategy for markets where both languages drive significant search and AI discovery volume.",
   },
   {
     category: "markets",
@@ -326,8 +304,8 @@ export const FAQ_ITEMS: {
 ];
 
 export const AUDIT_PROMISES = [
-  "Diagnostic across ChatGPT, Gemini, Claude, Perplexity & Google AI — before the call",
-  "45–60 min session with a senior Calibrate strategist — not a junior account manager",
+  "Diagnostic across ChatGPT, Gemini, Claude, Perplexity & Google AI, completed before the call",
+  "45 to 60 min session with a senior Calibrate strategist, not a junior account manager",
   "Clear visibility gaps, competitor citation analysis, and priority opportunities identified",
   "No obligation. No generic audit deck. A genuine strategic conversation.",
   "We respond within one business day",
