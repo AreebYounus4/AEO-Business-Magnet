@@ -18,7 +18,7 @@ export function ClientLogoImage({
       width={120}
       height={height}
       className="client-logo-img"
-      style={{ width: "auto", height, maxWidth: 110 }}
+      style={{ width: "auto", height, maxWidth: "min(110px, 100%)" }}
     />
   );
 }

@@ -2,26 +2,34 @@ import type { LeadRepository } from "@/application/ports/LeadRepository";
 import type { Lead, UpdateLeadScoreInput } from "@/domain/entities/Lead";
 import { GoogleSheetsClient } from "./GoogleSheetsClient";
 
+function leadRow(lead: Lead): (string | number)[] {
+  return [
+    lead.id,
+    lead.scanId,
+    lead.fullName,
+    lead.workEmail,
+    lead.phoneNumber,
+    lead.websiteUrl,
+    lead.brandName,
+    lead.overallScore ?? "",
+    lead.scoreBand ?? "",
+    lead.enabledEngines.join(", "),
+    lead.reportUrl,
+    lead.status,
+    lead.createdAt,
+    lead.updatedAt,
+    lead.company ?? "",
+    lead.revenue ?? "",
+    lead.market ?? "",
+    lead.challenge ?? "",
+  ];
+}
+
 export class GoogleSheetsLeadRepository implements LeadRepository {
   constructor(private readonly client: GoogleSheetsClient) {}
 
   async createLead(lead: Lead): Promise<void> {
-    await this.client.appendRow("Leads", [
-      lead.id,
-      lead.scanId,
-      lead.fullName,
-      lead.workEmail,
-      lead.phoneNumber,
-      lead.websiteUrl,
-      lead.brandName,
-      lead.overallScore ?? "",
-      lead.scoreBand ?? "",
-      lead.enabledEngines.join(", "),
-      lead.reportUrl,
-      lead.status,
-      lead.createdAt,
-      lead.updatedAt,
-    ]);
+    await this.client.appendRow("Leads", leadRow(lead));
   }
 
   async updateLeadScore(input: UpdateLeadScoreInput): Promise<void> {
@@ -44,6 +52,10 @@ export class GoogleSheetsLeadRepository implements LeadRepository {
       input.status,
       row[12] ?? "",
       new Date().toISOString(),
+      row[14] ?? "",
+      row[15] ?? "",
+      row[16] ?? "",
+      row[17] ?? "",
     ]);
   }
 }
