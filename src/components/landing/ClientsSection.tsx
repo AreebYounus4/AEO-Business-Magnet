@@ -1,4 +1,5 @@
 import { CLIENT_LOGOS } from "@/components/landing/content";
+import { ClientLogoImage } from "@/components/landing/ClientLogoImage";
 
 export function ClientsSection() {
   return (
@@ -14,9 +15,9 @@ export function ClientsSection() {
           </h2>
         </div>
         <div className="logo-grid" role="list" aria-label="Client logos">
-          {CLIENT_LOGOS.map((name) => (
-            <div key={name} className="lg-cell" role="listitem">
-              <div className="lg-text">{name}</div>
+          {CLIENT_LOGOS.map((logo) => (
+            <div key={logo.name} className="lg-cell" role="listitem">
+              <ClientLogoImage name={logo.name} src={logo.src} height={30} />
             </div>
           ))}
         </div>

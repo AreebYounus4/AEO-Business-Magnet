@@ -30,5 +30,5 @@ export type ScoreBand = (typeof SCORE_BANDS)[number];
 export const SENTIMENTS = ["positive", "neutral", "mixed", "negative"] as const;
 export type Sentiment = (typeof SENTIMENTS)[number];
 
-export const LEAD_STATUSES = ["new", "scanned", "failed"] as const;
+export const LEAD_STATUSES = ["new", "scanned", "failed", "audit_request"] as const;
 export type LeadStatus = (typeof LEAD_STATUSES)[number];

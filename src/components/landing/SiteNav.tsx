@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { OpenScoreCheckButton } from "@/components/forms/ScoreCheckContext";
-import { ArrowIcon, LogoMark } from "@/components/landing/icons";
+import { ArrowIcon } from "@/components/landing/icons";
+import { CALIBRATE_LOGO } from "@/components/landing/logos";
 
 export function SiteNav() {
   const [scrolled, setScrolled] = useState(false);
@@ -23,13 +25,15 @@ export function SiteNav() {
     >
       <div className="nav-inner">
         <Link href="/" className="logo" aria-label="Calibrate Commerce home">
-          <div className="logo-mark" aria-hidden="true">
-            <LogoMark />
-          </div>
-          <div>
-            <div className="logo-text">Calibrate Commerce</div>
-            <div className="logo-sub">Growth Partner</div>
-          </div>
+          <Image
+            src={CALIBRATE_LOGO}
+            alt=""
+            width={140}
+            height={32}
+            className="nav-logo-img"
+            style={{ width: "auto", height: 32 }}
+            priority
+          />
         </Link>
 
         <div className="nav-links">

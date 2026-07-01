@@ -1,12 +1,18 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { z } from "zod";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { LoadingState } from "@/components/ui/LoadingState";
 import { ErrorMessage } from "@/components/ui/ErrorMessage";
+import {
+  ENGINE_TO_PLATFORM,
+  PLATFORM_META,
+  type PlatformId,
+} from "@/components/landing/logos";
 
 const formSchema = z.object({
   fullName: z.string().trim().min(1, "Full name is required."),
@@ -28,22 +34,13 @@ const BASE_STEPS = [
   "Preparing report",
 ];
 
-const PLATFORM_META: Record<
-  string,
-  { label: string; color: string; letter: string; gradient?: boolean }
-> = {
-  openai: { label: "ChatGPT", color: "#10A37F", letter: "C" },
-  gemini: {
-    label: "Gemini",
-    color: "linear-gradient(135deg,#4285F4,#34A853)",
-    letter: "G",
-    gradient: true,
-  },
-  claude: { label: "Claude", color: "#C96A42", letter: "Cl" },
-  perplexity: { label: "Perplexity", color: "#1B2B3B", letter: "P" },
-};
+const DEFAULT_PLATFORMS = ["openai", "gemini", "claude", "perplexity", "google-ai"];
 
-const DEFAULT_PLATFORMS = ["openai", "gemini", "claude", "perplexity"];
+function getPlatformMeta(engine: string) {
+  const platformId: PlatformId =
+    ENGINE_TO_PLATFORM[engine] ?? (engine as PlatformId);
+  return PLATFORM_META[platformId] ?? PLATFORM_META.chatgpt;
+}
 
 interface LeadCaptureFormProps {
   variant?: "modal" | "inline";
@@ -174,7 +171,7 @@ export function LeadCaptureForm({ variant = "inline" }: LeadCaptureFormProps) {
           <h3 className="mb-2 text-[clamp(1.3rem,2.5vw,1.8rem)] font-extrabold leading-tight tracking-tight text-white">
             Check Your Website&apos;s
             <br />
-            AI Search Score — Free
+            AI Search Score, Free
           </h3>
           <p className="max-w-xl text-[0.88rem] leading-relaxed text-white/60">
             See exactly how your brand appears (or doesn&apos;t) across ChatGPT,
@@ -183,21 +180,23 @@ export function LeadCaptureForm({ variant = "inline" }: LeadCaptureFormProps) {
 
           <div className="mt-4 flex flex-wrap items-center gap-2">
             {displayPlatforms.map((engine) => {
-              const meta = PLATFORM_META[engine] ?? {
-                label: engine,
-                color: "#071932",
-                letter: engine[0]?.toUpperCase() ?? "?",
-              };
+              const meta = getPlatformMeta(engine);
               return (
                 <div
                   key={engine}
                   className="flex items-center gap-1.5 rounded-full bg-white/7 px-2.5 py-1 text-[0.68rem] font-bold text-white/70"
                 >
                   <span
-                    className="flex h-4 w-4 shrink-0 items-center justify-center rounded text-[0.55rem] font-black text-white"
-                    style={{ background: meta.color }}
+                    className="flex h-4 w-4 shrink-0 items-center justify-center overflow-hidden rounded"
+                    style={{ background: meta.bg }}
                   >
-                    {meta.letter}
+                    <Image
+                      src={meta.logo}
+                      alt=""
+                      width={10}
+                      height={10}
+                      className="object-contain"
+                    />
                   </span>
                   {meta.label}
                 </div>

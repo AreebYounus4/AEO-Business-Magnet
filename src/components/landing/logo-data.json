@@ -1,0 +1,126 @@
+{
+  "strip": [
+    {
+      "name": "Virgin Mobile",
+      "src": "/logos/clients/virgin-mobile.svg"
+    },
+    {
+      "name": "First Abu Dhabi Bank",
+      "src": "/logos/clients/first-abu-dhabi-bank.svg"
+    },
+    {
+      "name": "ekar",
+      "src": "/logos/clients/ekar.svg"
+    },
+    {
+      "name": "Zain",
+      "src": "/logos/clients/zain.svg"
+    },
+    {
+      "name": "HP",
+      "src": "/logos/clients/hp.svg"
+    },
+    {
+      "name": "Papa Johns",
+      "src": "/logos/clients/papa-johns.svg"
+    },
+    {
+      "name": "Eyewa",
+      "src": "/logos/clients/eyewa.svg"
+    },
+    {
+      "name": "Zurich Insurance",
+      "src": "/logos/clients/zurich-insurance.png"
+    },
+    {
+      "name": "Red Bull Mobile",
+      "src": "/logos/clients/red-bull-mobile.png"
+    },
+    {
+      "name": "Modon",
+      "src": "/logos/clients/modon.png"
+    }
+  ],
+  "clients": [
+    {
+      "name": "Virgin Mobile",
+      "src": "/logos/clients/virgin-mobile.svg"
+    },
+    {
+      "name": "First Abu Dhabi Bank",
+      "src": "/logos/clients/first-abu-dhabi-bank.svg"
+    },
+    {
+      "name": "ekar",
+      "src": "/logos/clients/ekar.svg"
+    },
+    {
+      "name": "Zain",
+      "src": "/logos/clients/zain.svg"
+    },
+    {
+      "name": "HP",
+      "src": "/logos/clients/hp.svg"
+    },
+    {
+      "name": "Papa Johns",
+      "src": "/logos/clients/papa-johns.svg"
+    },
+    {
+      "name": "Eyewa",
+      "src": "/logos/clients/eyewa.svg"
+    },
+    {
+      "name": "Zurich Insurance",
+      "src": "/logos/clients/zurich-insurance.png"
+    },
+    {
+      "name": "Red Bull Mobile",
+      "src": "/logos/clients/red-bull-mobile.png"
+    },
+    {
+      "name": "Modon",
+      "src": "/logos/clients/modon.png"
+    },
+    {
+      "name": "Namshi",
+      "src": "/logos/clients/namshi.svg"
+    },
+    {
+      "name": "VogaCloset",
+      "src": "/logos/clients/vogacloset.svg"
+    },
+    {
+      "name": "Shahid",
+      "src": "/logos/clients/shahid.svg"
+    },
+    {
+      "name": "Nabataty",
+      "src": "/logos/clients/nabataty.webp"
+    },
+    {
+      "name": "Doozy",
+      "src": "/logos/clients/doozy.png"
+    },
+    {
+      "name": "DailyHunt",
+      "src": "/logos/clients/dailyhunt.webp"
+    },
+    {
+      "name": "Tyres Online",
+      "src": "/logos/clients/tyres-online.png"
+    },
+    {
+      "name": "ARY & MAZ Developments",
+      "src": "/logos/clients/ary-maz-developments.png"
+    },
+    {
+      "name": "Tariq Al Futtaim Living",
+      "src": "/logos/clients/tariq-al-futtaim-living.png"
+    },
+    {
+      "name": "Rua Alharam",
+      "src": "/logos/clients/rua-alharam.png"
+    }
+  ]
+}

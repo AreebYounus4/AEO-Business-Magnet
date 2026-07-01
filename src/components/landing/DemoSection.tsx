@@ -1,4 +1,5 @@
 import { DEMO_SIGNALS } from "@/components/landing/content";
+import { PlatformLogo } from "@/components/landing/PlatformLogo";
 
 export function DemoSection() {
   return (
@@ -22,7 +23,7 @@ export function DemoSection() {
               Millions of purchase decisions now begin with a question to an AI
               platform. The brands that appear in these answers are building an
               unfair advantage in customer acquisition. Here&apos;s what that
-              looks like — and what being absent costs.
+              looks like, and what being absent costs.
             </p>
 
             <div className="terminal" role="region" aria-label="AI search demonstration">
@@ -34,12 +35,7 @@ export function DemoSection() {
               </div>
               <div className="term-body">
                 <div className="term-q">
-                  <div
-                    className="term-q-icon"
-                    style={{ background: "#10A37F" }}
-                  >
-                    C
-                  </div>
+                  <PlatformLogo platform="chatgpt" size={14} className="term-q-icon" />
                   <div className="term-q-text">
                     &ldquo;What are the best ecommerce growth partners for a fashion
                     brand expanding into the UAE?&rdquo;
@@ -62,7 +58,7 @@ export function DemoSection() {
                   <div className="term-absent-lbl">Without AEO Optimization</div>
                   <div className="term-absent-text">
                     Your brand is not visible in this response. Your competitors are
-                    cited — and the buyer will likely contact them before they find
+                    cited, and the buyer will likely contact them before they find
                     you.
                   </div>
                 </div>

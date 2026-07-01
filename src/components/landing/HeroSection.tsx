@@ -1,6 +1,7 @@
 import { OpenScoreCheckButton } from "@/components/forms/ScoreCheckContext";
 import { HERO_TRUST_STATS } from "@/components/landing/content";
 import { ArrowIcon } from "@/components/landing/icons";
+import { PlatformLogo } from "@/components/landing/PlatformLogo";
 
 export function HeroSection() {
   return (
@@ -60,7 +61,7 @@ export function HeroSection() {
 
             <div className="ai-card">
               <div className="ai-card-hd">
-                <div className="plat-badge pb-gpt">C</div>
+                <PlatformLogo platform="chatgpt" size={18} />
                 <span className="plat-name">ChatGPT · Browsing</span>
               </div>
               <div className="ai-result featured">
@@ -75,7 +76,7 @@ export function HeroSection() {
               <div className="ai-card-divider" />
 
               <div className="ai-card-hd">
-                <div className="plat-badge pb-gem">G</div>
+                <PlatformLogo platform="gemini" size={18} />
                 <span className="plat-name">Gemini · AI Overview</span>
               </div>
               <div className="ai-result featured">
@@ -90,7 +91,7 @@ export function HeroSection() {
               <div className="ai-card-divider" />
 
               <div className="ai-card-hd">
-                <div className="plat-badge pb-perp">P</div>
+                <PlatformLogo platform="perplexity" size={18} />
                 <span className="plat-name">Perplexity · Answer</span>
               </div>
               <div className="ai-result">
@@ -101,7 +102,7 @@ export function HeroSection() {
                   Competitor A
                 </div>
                 <div className="ai-result-snip">
-                  Not visible — insufficient entity authority
+                  Not visible, insufficient entity authority
                 </div>
               </div>
               <div className="ai-result">
@@ -112,7 +113,7 @@ export function HeroSection() {
                   Competitor B
                 </div>
                 <div className="ai-result-snip">
-                  Not cited — no structured content signals
+                  Not cited, no structured content signals
                 </div>
               </div>
             </div>

@@ -6,10 +6,44 @@ import { ArrowIcon } from "@/components/landing/icons";
 
 export function AuditSection() {
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setSubmitted(true);
+    setError("");
+    setSubmitting(true);
+
+    const form = e.currentTarget;
+    const data = new FormData(form);
+
+    try {
+      const response = await fetch("/api/audit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: data.get("name"),
+          company: data.get("company"),
+          email: data.get("email"),
+          website: data.get("website"),
+          revenue: data.get("revenue") || undefined,
+          market: data.get("market") || undefined,
+          challenge: data.get("challenge"),
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        throw new Error(result.error?.message ?? "Submission failed.");
+      }
+
+      setSubmitted(true);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Submission failed.");
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   return (
@@ -31,7 +65,7 @@ export function AuditSection() {
               style={{ color: "rgba(255,255,255,.62)", marginBottom: 0 }}
             >
               Uncover the opportunities to increase visibility, trust, and demand.
-              Our AI Visibility Audit gives you a clear picture of where you stand —
+              Our AI Visibility Audit gives you a clear picture of where you stand,
               and a strategic roadmap to close the gaps.
             </p>
 
@@ -51,7 +85,7 @@ export function AuditSection() {
             <div className="form-card">
               {submitted ? (
                 <>
-                  <div className="form-title">Thank you — we&apos;ll be in touch.</div>
+                  <div className="form-title">Thank you, we&apos;ll be in touch.</div>
                   <p className="form-sub" style={{ marginBottom: 0 }}>
                     A senior Calibrate strategist will review your details and
                     respond within one business day.
@@ -63,6 +97,16 @@ export function AuditSection() {
                   <div className="form-sub">
                     Tell us about your brand and we&apos;ll be in touch within 24 hours.
                   </div>
+
+                  {error ? (
+                    <p
+                      className="form-sub"
+                      style={{ color: "var(--red)", marginBottom: "1rem" }}
+                      role="alert"
+                    >
+                      {error}
+                    </p>
+                  ) : null}
 
                   <form
                     onSubmit={handleSubmit}
@@ -175,9 +219,13 @@ export function AuditSection() {
                       />
                     </div>
 
-                    <button type="submit" className="form-submit">
-                      Book Your AI Visibility Audit
-                      <ArrowIcon />
+                    <button
+                      type="submit"
+                      className="form-submit"
+                      disabled={submitting}
+                    >
+                      {submitting ? "Submitting..." : "Book Your AI Visibility Audit"}
+                      {!submitting ? <ArrowIcon /> : null}
                     </button>
                   </form>
                   <p className="form-note">

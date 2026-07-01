@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { OpenScoreCheckButton } from "@/components/forms/ScoreCheckContext";
 import { WHY_CARDS } from "@/components/landing/content";
 import { ArrowIcon } from "@/components/landing/icons";
@@ -27,6 +28,20 @@ export function WhyCalibrateSection() {
               between being found and being chosen. Our Discoverability
               Intelligence framework helps brands become all four.
             </p>
+
+            <div className="why-human-visual reveal">
+              <Image
+                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?fm=jpg&q=80&w=800&auto=format&fit=crop"
+                alt="Team collaborating on digital strategy around laptops"
+                fill
+                sizes="(max-width: 768px) 100vw, 400px"
+              />
+              <div className="why-human-overlay" />
+              <div className="why-human-caption">
+                Senior strategists. Real results.
+              </div>
+            </div>
+
             <OpenScoreCheckButton className="btn btn-ghost btn-lg">
               Check Your Website Score Now
               <ArrowIcon />

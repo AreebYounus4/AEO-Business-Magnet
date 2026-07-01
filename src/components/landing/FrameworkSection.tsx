@@ -1,4 +1,5 @@
 import { FRAMEWORK_STEPS } from "@/components/landing/content";
+import { HumanVisualBanner } from "@/components/landing/HumanVisualBanner";
 
 export function FrameworkSection() {
   return (
@@ -23,6 +24,8 @@ export function FrameworkSection() {
             across every AI platform where buying decisions are made.
           </p>
         </div>
+
+        <HumanVisualBanner />
 
         <div
           className="framework-grid"

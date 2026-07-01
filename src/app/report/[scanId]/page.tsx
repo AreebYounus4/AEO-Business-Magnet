@@ -6,6 +6,7 @@ import { PlatformScoreCard } from "@/components/report/PlatformScoreCard";
 import { FindingsList } from "@/components/report/FindingsList";
 import { RecommendationsList } from "@/components/report/RecommendationsList";
 import { ReportDownloadButton } from "@/components/report/ReportDownloadButton";
+import { ReportFollowUp } from "@/components/report/ReportFollowUp";
 import { SiteNav } from "@/components/landing/SiteNav";
 import { SiteFooter } from "@/components/landing/SiteFooter";
 
@@ -77,13 +78,14 @@ export default async function ReportPage({
           <strong className="text-navy">Disclaimer:</strong> This report is a
           directional diagnostic based on automated AI visibility checks at the time
           of scanning. Scores reflect observed AI responses and should be used as
-          a starting point for strategic optimisation — not as a guarantee of future
+          a starting point for strategic optimisation, not as a guarantee of future
           visibility.
         </div>
       </main>
       <div className="no-print">
         <SiteFooter />
       </div>
+      <ReportFollowUp scanId={scanId} brandName={report.brandName} />
     </div>
     </ScoreCheckProvider>
   );

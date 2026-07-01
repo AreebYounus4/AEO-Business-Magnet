@@ -1,4 +1,5 @@
 import { LOGO_STRIP } from "@/components/landing/content";
+import { ClientLogoImage } from "@/components/landing/ClientLogoImage";
 
 export function LogoStrip() {
   return (
@@ -8,9 +9,9 @@ export function LogoStrip() {
           Trusted by growth brands across the GCC and beyond
         </p>
         <div className="ls-row">
-          {LOGO_STRIP.map((name) => (
-            <div key={name} className="ls-item">
-              <div className="ls-text">{name}</div>
+          {LOGO_STRIP.map((logo) => (
+            <div key={logo.name} className="ls-item">
+              <ClientLogoImage name={logo.name} src={logo.src} height={26} />
             </div>
           ))}
         </div>

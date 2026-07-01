@@ -10,7 +10,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "AI Search Optimization (AEO) | Calibrate Commerce",
   description:
-    "Your next customer may never visit your website. Calibrate Commerce helps brands get found, trusted and chosen inside ChatGPT, Gemini, Claude, Perplexity and Google AI — through Answer Engine Optimization (AEO).",
+    "Your next customer may never visit your website. Calibrate Commerce helps brands get found, trusted and chosen inside ChatGPT, Gemini, Claude, Perplexity and Google AI, through Answer Engine Optimization (AEO).",
   robots: "index, follow",
   openGraph: {
     title: "AI Search Optimization (AEO) | Calibrate Commerce",
