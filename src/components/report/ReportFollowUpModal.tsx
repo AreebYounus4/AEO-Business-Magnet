@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
 
 interface ReportFollowUpModalProps {
   scanId: string;
@@ -9,11 +9,22 @@ interface ReportFollowUpModalProps {
 
 const STORAGE_KEY = "cc-report-followup-dismissed";
 
+const FOCUSABLE =
+  'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
 export function ReportFollowUpModal({
   scanId,
   brandName,
 }: ReportFollowUpModalProps) {
   const [open, setOpen] = useState(false);
+  const titleId = useId();
+  const modalRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+
+  const close = useCallback(() => {
+    sessionStorage.setItem(`${STORAGE_KEY}:${scanId}`, "1");
+    setOpen(false);
+  }, [scanId]);
 
   useEffect(() => {
     const dismissed = sessionStorage.getItem(`${STORAGE_KEY}:${scanId}`);
@@ -25,28 +36,55 @@ export function ReportFollowUpModal({
 
   useEffect(() => {
     if (!open) return;
+
     document.body.style.overflow = "hidden";
+    closeButtonRef.current?.focus();
+
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") {
+        close();
+        return;
+      }
+
+      if (e.key !== "Tab" || !modalRef.current) return;
+
+      const focusables = Array.from(
+        modalRef.current.querySelectorAll<HTMLElement>(FOCUSABLE),
+      );
+      if (focusables.length === 0) return;
+
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      const active = document.activeElement;
+
+      if (e.shiftKey && active === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && active === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+
+    window.addEventListener("keydown", onKeyDown);
     return () => {
       document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKeyDown);
     };
-  }, [open]);
+  }, [open, close]);
 
   if (!open) return null;
 
-  function close() {
-    sessionStorage.setItem(`${STORAGE_KEY}:${scanId}`, "1");
-    setOpen(false);
-  }
-
   return (
     <div
-      className="pop-overlay active"
+      className="pop-overlay active no-print"
       role="dialog"
       aria-modal="true"
-      aria-label="Discovery call follow-up"
+      aria-labelledby={titleId}
     >
-      <div className="pop-modal report-followup-modal">
+      <div className="pop-modal report-followup-modal" ref={modalRef}>
         <button
+          ref={closeButtonRef}
           type="button"
           className="pop-close"
           onClick={close}
@@ -57,7 +95,7 @@ export function ReportFollowUpModal({
 
         <div className="report-followup-body">
           <div className="report-followup-icon">✅</div>
-          <h2 className="report-followup-title">
+          <h2 id={titleId} className="report-followup-title">
             Your report is ready{brandName ? `, ${brandName}` : ""}.
           </h2>
           <p className="report-followup-lead">

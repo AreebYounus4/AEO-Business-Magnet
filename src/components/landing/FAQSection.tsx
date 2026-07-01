@@ -37,11 +37,17 @@ export function FAQSection() {
 
         <div className="faq-layout">
           <div className="faq-sidebar">
-            <div className="faq-cats" role="list" aria-label="FAQ categories">
+            <div
+              className="faq-cats"
+              role="tablist"
+              aria-label="FAQ categories"
+            >
               {CATEGORIES.map((cat) => (
                 <button
                   key={cat.id}
                   type="button"
+                  role="tab"
+                  aria-selected={activeCategory === cat.id}
                   className={`faq-cat${activeCategory === cat.id ? " active" : ""}`}
                   onClick={() => {
                     setActiveCategory(cat.id);
@@ -54,23 +60,33 @@ export function FAQSection() {
             </div>
           </div>
 
-          <div className="faq-items">
+          <div className="faq-items" role="tabpanel">
             {filtered.map((faq, index) => {
               const isOpen = openIndex === index;
+              const panelId = `faq-panel-${index}`;
+              const buttonId = `faq-button-${index}`;
               return (
                 <div key={faq.question} className="faq-item" data-cat={faq.category}>
                   <button
+                    id={buttonId}
                     type="button"
                     className={`faq-q${isOpen ? " open" : ""}`}
                     onClick={() => setOpenIndex(isOpen ? null : index)}
                     aria-expanded={isOpen}
+                    aria-controls={panelId}
                   >
                     {faq.question}
                     <span className="faq-icon" aria-hidden="true">
                       +
                     </span>
                   </button>
-                  <div className={`faq-a${isOpen ? " open" : ""}`} role="region">
+                  <div
+                    id={panelId}
+                    className={`faq-a${isOpen ? " open" : ""}`}
+                    role="region"
+                    aria-labelledby={buttonId}
+                    hidden={!isOpen}
+                  >
                     <p>{faq.answer}</p>
                   </div>
                 </div>

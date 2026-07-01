@@ -1,35 +1,57 @@
 "use client";
 
 import { useState } from "react";
+import { auditBookingRequestSchema } from "@/application/dto/AuditBookingRequest";
 import { AUDIT_PROMISES } from "@/components/landing/content";
 import { ArrowIcon } from "@/components/landing/icons";
+
+function fieldClass(hasError: boolean) {
+  return hasError ? "form-input form-input-error" : "form-input";
+}
 
 export function AuditSection() {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (submitting) return;
+
     setError("");
-    setSubmitting(true);
+    setFieldErrors({});
 
     const form = e.currentTarget;
     const data = new FormData(form);
+    const payload = {
+      name: String(data.get("name") ?? ""),
+      company: String(data.get("company") ?? ""),
+      email: String(data.get("email") ?? ""),
+      website: String(data.get("website") ?? ""),
+      revenue: String(data.get("revenue") ?? "") || undefined,
+      market: String(data.get("market") ?? "") || undefined,
+      challenge: String(data.get("challenge") ?? ""),
+    };
+
+    const parsed = auditBookingRequestSchema.safeParse(payload);
+    if (!parsed.success) {
+      const nextErrors: Record<string, string> = {};
+      for (const issue of parsed.error.issues) {
+        const key = issue.path[0]?.toString();
+        if (key) nextErrors[key] = issue.message;
+      }
+      setFieldErrors(nextErrors);
+      return;
+    }
+
+    setSubmitting(true);
 
     try {
       const response = await fetch("/api/audit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: data.get("name"),
-          company: data.get("company"),
-          email: data.get("email"),
-          website: data.get("website"),
-          revenue: data.get("revenue") || undefined,
-          market: data.get("market") || undefined,
-          challenge: data.get("challenge"),
-        }),
+        body: JSON.stringify(parsed.data),
       });
 
       const result = await response.json();
@@ -119,28 +141,42 @@ export function AuditSection() {
                           Your Name <span aria-label="required">*</span>
                         </label>
                         <input
-                          className="form-input"
+                          className={fieldClass(Boolean(fieldErrors.name))}
                           type="text"
                           id="f-name"
                           name="name"
                           placeholder="Full name"
                           required
                           autoComplete="name"
+                          aria-invalid={Boolean(fieldErrors.name)}
+                          aria-describedby={fieldErrors.name ? "f-name-error" : undefined}
                         />
+                        {fieldErrors.name ? (
+                          <p id="f-name-error" className="form-field-error" role="alert">
+                            {fieldErrors.name}
+                          </p>
+                        ) : null}
                       </div>
                       <div className="form-g">
                         <label className="form-lbl" htmlFor="f-co">
                           Company <span aria-label="required">*</span>
                         </label>
                         <input
-                          className="form-input"
+                          className={fieldClass(Boolean(fieldErrors.company))}
                           type="text"
                           id="f-co"
                           name="company"
                           placeholder="Company name"
                           required
                           autoComplete="organization"
+                          aria-invalid={Boolean(fieldErrors.company)}
+                          aria-describedby={fieldErrors.company ? "f-co-error" : undefined}
                         />
+                        {fieldErrors.company ? (
+                          <p id="f-co-error" className="form-field-error" role="alert">
+                            {fieldErrors.company}
+                          </p>
+                        ) : null}
                       </div>
                     </div>
 
@@ -150,28 +186,42 @@ export function AuditSection() {
                           Work Email <span aria-label="required">*</span>
                         </label>
                         <input
-                          className="form-input"
+                          className={fieldClass(Boolean(fieldErrors.email))}
                           type="email"
                           id="f-email"
                           name="email"
                           placeholder="you@company.com"
                           required
                           autoComplete="email"
+                          aria-invalid={Boolean(fieldErrors.email)}
+                          aria-describedby={fieldErrors.email ? "f-email-error" : undefined}
                         />
+                        {fieldErrors.email ? (
+                          <p id="f-email-error" className="form-field-error" role="alert">
+                            {fieldErrors.email}
+                          </p>
+                        ) : null}
                       </div>
                       <div className="form-g">
                         <label className="form-lbl" htmlFor="f-web">
                           Website <span aria-label="required">*</span>
                         </label>
                         <input
-                          className="form-input"
+                          className={fieldClass(Boolean(fieldErrors.website))}
                           type="url"
                           id="f-web"
                           name="website"
                           placeholder="https://yoursite.com"
                           required
                           autoComplete="url"
+                          aria-invalid={Boolean(fieldErrors.website)}
+                          aria-describedby={fieldErrors.website ? "f-web-error" : undefined}
                         />
+                        {fieldErrors.website ? (
+                          <p id="f-web-error" className="form-field-error" role="alert">
+                            {fieldErrors.website}
+                          </p>
+                        ) : null}
                       </div>
                     </div>
 
@@ -211,18 +261,32 @@ export function AuditSection() {
                         <span aria-label="required">*</span>
                       </label>
                       <textarea
-                        className="form-ta"
+                        className={
+                          fieldErrors.challenge
+                            ? "form-ta form-input-error"
+                            : "form-ta"
+                        }
                         id="f-challenge"
                         name="challenge"
                         placeholder="e.g. We're not visible in ChatGPT or Gemini when buyers search for our category. We rank well on Google but AI platforms don't recommend us. We want to understand our AI search presence vs competitors."
                         required
+                        aria-invalid={Boolean(fieldErrors.challenge)}
+                        aria-describedby={
+                          fieldErrors.challenge ? "f-challenge-error" : undefined
+                        }
                       />
+                      {fieldErrors.challenge ? (
+                        <p id="f-challenge-error" className="form-field-error" role="alert">
+                          {fieldErrors.challenge}
+                        </p>
+                      ) : null}
                     </div>
 
                     <button
                       type="submit"
                       className="form-submit"
                       disabled={submitting}
+                      aria-busy={submitting}
                     >
                       {submitting ? "Submitting..." : "Book Your AI Visibility Audit"}
                       {!submitting ? <ArrowIcon /> : null}

@@ -5,6 +5,16 @@ import { useEffect, type ReactNode } from "react";
 const REVEAL_SELECTOR =
   ".win-card,.fw-card,.oc-card,.why-card,.tg-card,.sig,.faq-item,.query-card,.lg-cell,.big-q-box,.framework-banner,.why-human-visual";
 
+function parseStatText(text: string) {
+  const match = text.trim().match(/^([^\d]*)(\d+(?:\.\d+)?)(.*)$/);
+  if (!match) return null;
+  return {
+    prefix: match[1],
+    num: parseFloat(match[2]),
+    suffix: match[3],
+  };
+}
+
 export function PremiumEffects({ children }: { children: ReactNode }) {
   useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -18,33 +28,35 @@ export function PremiumEffects({ children }: { children: ReactNode }) {
           }
         });
       },
-      { threshold: 0.1, rootMargin: "0px 0px -40px 0px" },
+      { threshold: 0.08, rootMargin: "0px 0px -24px 0px" },
     );
 
     document.querySelectorAll(REVEAL_SELECTOR).forEach((el, index) => {
+      if (reduced) {
+        el.classList.add("reveal", "visible");
+        return;
+      }
       el.classList.add("reveal", `d${(index % 5) + 1}`);
       revealObs.observe(el);
     });
 
     if (!reduced) {
       const pulseTimer = window.setTimeout(() => {
-        document
-          .querySelectorAll(".btn-red")
-          .forEach((btn, index) => {
-            if (index === 0) btn.classList.add("pulse-anim");
-          });
+        document.querySelectorAll(".btn-red").forEach((btn, index) => {
+          if (index === 0) btn.classList.add("pulse-anim");
+        });
       }, 2000);
 
       const animateCounters = () => {
         document.querySelectorAll(".tstat-n,.tg-num").forEach((el) => {
-          if (el instanceof HTMLElement && el.dataset.animated) return;
+          if (!(el instanceof HTMLElement) || el.dataset.animated) return;
           const text = el.textContent ?? "";
-          const num = parseFloat(text.replace(/[^0-9.]/g, ""));
-          if (!num) return;
-          if (el instanceof HTMLElement) el.dataset.animated = "1";
-          const suffix = text.replace(/[0-9.]/g, "");
-          const prefix = text.match(/^\D*/)?.[0] ?? "";
-          const duration = 1400;
+          const parsed = parseStatText(text);
+          if (!parsed || !parsed.num) return;
+
+          el.dataset.animated = "1";
+          const { prefix, num, suffix } = parsed;
+          const duration = 900;
           let startTime: number | null = null;
 
           const step = (ts: number) => {
@@ -75,7 +87,7 @@ export function PremiumEffects({ children }: { children: ReactNode }) {
             }
           });
         },
-        { threshold: 0.5 },
+        { threshold: 0.35 },
       );
 
       document

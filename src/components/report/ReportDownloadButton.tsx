@@ -1,13 +1,18 @@
 "use client";
 
 export function ReportDownloadButton() {
+  function handlePrint() {
+    window.print();
+  }
+
   return (
     <button
       type="button"
-      onClick={() => window.print()}
-      className="btn-red no-print"
+      onClick={handlePrint}
+      className="btn btn-red no-print"
+      aria-label="Print or save report as PDF"
     >
-      Download / Print Report
+      Print / Save PDF
     </button>
   );
 }
