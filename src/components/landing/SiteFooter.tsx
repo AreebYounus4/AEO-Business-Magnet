@@ -1,4 +1,7 @@
-import Link from "next/link";
+const EXTERNAL_LINK_PROPS = {
+  target: "_blank" as const,
+  rel: "noopener noreferrer",
+};
 
 export function SiteFooter() {
   const year = new Date().getFullYear();
@@ -31,28 +34,48 @@ export function SiteFooter() {
           <div>
             <div className="footer-col-title">Company</div>
             <nav className="footer-links" aria-label="Company">
-              <Link href="/about">About Calibrate</Link>
-              <Link href="/case-studies">Case Studies</Link>
-              <Link href="/insights">Insights</Link>
-              <Link href="/contact">Contact</Link>
+              <a href="https://www.calibratecommerce.com/about" {...EXTERNAL_LINK_PROPS}>
+                About Calibrate
+              </a>
+              <a href="https://www.calibratecommerce.com/work" {...EXTERNAL_LINK_PROPS}>
+                Case Studies
+              </a>
+              <a href="https://www.calibratecommerce.com/blog" {...EXTERNAL_LINK_PROPS}>
+                Insights
+              </a>
+              <a href="https://www.calibratecommerce.com/contact" {...EXTERNAL_LINK_PROPS}>
+                Contact
+              </a>
             </nav>
           </div>
           <div>
             <div className="footer-col-title">Resources</div>
             <nav className="footer-links" aria-label="Resources">
-              <Link href="/insights/aeo-guide">AEO Guide</Link>
-              <Link href="/insights/ai-search">AI Search Report</Link>
-              <Link href="/insights/entity-optimization">Entity Optimization</Link>
-              <Link href="/faq">FAQ</Link>
+              <a href="#faq">FAQ</a>
             </nav>
           </div>
         </div>
         <div className="footer-bottom">
           <div>© {year} Calibrate Commerce. All rights reserved.</div>
           <div className="footer-bottom-right" role="navigation" aria-label="Legal">
-            <Link href="/privacy">Privacy Policy</Link>
-            <Link href="/terms">Terms</Link>
-            <Link href="/cookies">Cookies</Link>
+            <a
+              href="https://www.calibratecommerce.com/privacy-policy"
+              {...EXTERNAL_LINK_PROPS}
+            >
+              Privacy Policy
+            </a>
+            <a
+              href="https://www.calibratecommerce.com/terms-conditions"
+              {...EXTERNAL_LINK_PROPS}
+            >
+              Terms
+            </a>
+            <a
+              href="https://www.calibratecommerce.com/terms-conditions"
+              {...EXTERNAL_LINK_PROPS}
+            >
+              Cookies
+            </a>
           </div>
         </div>
       </div>
