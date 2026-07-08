@@ -1,4 +1,5 @@
 import { Inter } from "next/font/google";
+import { GoogleTagManager } from "@/components/analytics/GoogleTagManager";
 import { createSiteMetadata } from "@/lib/seo/site";
 import "./globals.css";
 
@@ -16,7 +17,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} h-full`}>
-      <body className="min-h-full antialiased">{children}</body>
+      <body className="min-h-full antialiased">
+        <GoogleTagManager />
+        {children}
+      </body>
     </html>
   );
 }
